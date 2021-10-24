@@ -18,13 +18,15 @@ Programming Project 2 – Order Statistic Queries
 	queries is as follows:
 
     For each query:
-•	Compute the distance of the query point to each of the different Whataburger stores using the Haversine Formula.
-    See here for my Java implementation of this formula: https://youtu.be/Camxl1fTzaw?t=290
-•	Use the order statistic query to find the farthest store from the query that we care about.  For example, if we
-    want to report 30 stores, you should search for the 30th closest store to the query point.
+•	Compute the distance of the query point to each of the different Whataburger stores using the Haversine
+    Formula. See here for my Java implementation of this formula: https://youtu.be/Camxl1fTzaw?t=290
+
+•	Use the order statistic query to find the farthest store from the query that we care about.
+    For example, if we want to report 30 stores, you should search for the 30th closest store to the query point.
+
 •	Now that you know the 30th closest store to the query, you can then find all of the other stores that are at
-    least this close to the query.  Sort them in increasing distance from the query point and print them as I have shown
-    here: https://youtu.be/Camxl1fTzaw?t=808
+    least this close to the query.  Sort them in increasing distance from the query point and print them as I have
+    shown here: https://youtu.be/Camxl1fTzaw?t=808
 
     If you do not use an implementation of the randomized selection algorithm for this project, you will get a 0.  It is
     not hard to get the correct answer with a basic algorithm.  The entire point of this project is to use the algorithm
