@@ -1,16 +1,25 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Store {
-    public int id;
+
+    public String id;
     public String address;
     public String city;
     public String state;
-    public int zipCode;
+    public String zipCode;
     public double latitude;
     public double longitude;
     public double distance;
+    private List<Store> storeList = new ArrayList<>();
 
-        public Store (int theID, String theAddress, String theCity, String theState, int theZip, double theLat, double theLon ){
+    public List<Store> getStoreList() {
+        return storeList;
+    }
+
+    public Store (String theID, String theAddress, String theCity, String theState, String theZip, double theLat, double theLon ){
             id = theID;
             address = theAddress;
             city = theCity;

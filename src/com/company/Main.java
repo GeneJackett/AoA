@@ -1,9 +1,12 @@
 package com.company;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 
 
 public class Main {
+    public static ArrayList<Store> storeData = new ArrayList<>();
+
     public static double calculateDistance(){
         double distance = 0.0;
         return distance;
@@ -24,11 +27,36 @@ public class Main {
         //6.Sort the i stores and output in order from closest to furthest.
             String line  = "";
         try {
+
+
+
             // Create an object of file reader
             // class with CSV file as a parameter.
+            boolean firstLine = true;
             BufferedReader br = new BufferedReader(new FileReader("WhataburgerData.csv"));
             while((line = br.readLine()) != null) {
+                if(firstLine == true){
+                    firstLine = false;
+                    continue;
+                }
                 String[] attributes = line.split(",");
+                if(attributes[1].indexOf('"')==0){
+                    int j = 1;
+                    do{
+                        j++;
+                        attributes[1] += ("," + attributes[j]);
+                    }while(attributes[j].indexOf('\"') == -1);
+                    attributes[1].replace("\"","");
+                    attributes[2]=attributes[j+1];
+                    attributes[3]=attributes[j+2];
+                    attributes[4]=attributes[j+3];
+                    attributes[5]=attributes[j+4];
+                    attributes[6]=attributes[j+5];
+                }
+                Store thisStore = new Store(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],Double.parseDouble(attributes[5]),Double.parseDouble(attributes[6]));
+
+                storeData.add(thisStore); // create multipel Store objects.
+                System.out.print((attributes[0])+"\n");
 
             }
         } catch (IOException e) {
