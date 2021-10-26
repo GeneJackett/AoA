@@ -5,7 +5,7 @@ import java.io.*;
 
 
 public class Main {
-    public static ArrayList<Store> storeData = new ArrayList<>();
+    public static List<Store> storeData = new ArrayList<>();
 
     public static double calculateDistance(){
         double distance = 0.0;
@@ -56,12 +56,15 @@ public class Main {
                 Store thisStore = new Store(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],Double.parseDouble(attributes[5]),Double.parseDouble(attributes[6]));
 
                 storeData.add(thisStore); // create multipel Store objects.
-                System.out.print((attributes[0])+"\n");
+                //System.out.print((attributes[0])+"\n");
 
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Print outputs.\n");
+        //how to print variables form object
+        for(int i = 0; i < storeData.size(); i++) {
+            System.out.println(storeData.get(i).longitude+" "+i+"\n");
+        }
     }
 }

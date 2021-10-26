@@ -29,7 +29,7 @@ public class Store {
             longitude = theLon;
             distance = -1;
         }
-
+        //computer distance first
         public void computeDistance(double otherLat, double otherLong) {
             //Haversine Formula
             double radiusOfEarthInMiles = 3958.8;
@@ -57,11 +57,12 @@ public class Store {
        array, and places all smaller (smaller than pivot)
        to left of pivot and all greater elements to right
        of pivot */
-    static int partition(int[] arr, int low, int high)
+    // all elements to the left of the pivot will be our results.or at least up to the nth number of stores required.
+    public static double partition(double object, double otherLat, double longitude)//make corrections to parameters
     {
 
         // pivot
-        int pivot = arr[high];
+        double pivot = arr[high];
 
         // Index of smaller element and
         // indicates the right position
@@ -91,9 +92,9 @@ public class Store {
               low --> Starting index,
               high --> Ending index
      */
-    static void quickSort(int[] arr, int low, int high)
+    static void quickSort(int[] arr, double low, double high)
     {
-        if (low < high)
+        if ( low < high)
         {
 
             // pi is partitioning index, arr[p]
