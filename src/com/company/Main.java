@@ -87,15 +87,19 @@ public class Main {
         }
 
         distanceArr = new double[storeData.size()];
+
         //how to print variables form object
-        for(int i = 0; i < storeData.size(); i++) {
-            storeData.get(i).computeDistance(storeQueries.get(0).latQ,storeQueries.get(0).longQ);
-            distanceArr[i]=storeData.get(i).getDistance();
-            //System.out.println(storeData.get(i).distance+" "+i+"\n"); TEST PRINT
-        }
-        for (int r = 0; r <= storeQueries.size(); r++) {
+        for (int k = 0; k < storeQueries.size(); k++){
+            for(int i = 0; i < storeData.size(); i++) {
+                storeData.get(i).computeDistance(storeQueries.get(k).latQ, storeQueries.get(k).longQ);
+                distanceArr[i] = storeData.get(i).getDistance();
+                //System.out.println(storeData.get(i).distance+" "+i+"\n"); TEST PRINT
+            }
             Store.sort(distanceArr, 0, distanceArr.length - 1);
-            System.out.println(distanceArr[r] + "\n");
+            for (int r=0; r < storeQueries.get(k).numStores; r++ ){
+                System.out.println(distanceArr[r]);
+            }
+            System.out.println("");
         }
         //Queries are being stored properly and are ready for calculations.
         /*for (int g = 0; g < storeQueries.size(); g++){
