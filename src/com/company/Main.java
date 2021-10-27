@@ -1,19 +1,13 @@
 package com.company;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 
 
 public class Main {
     public static List<Store> storeData = new ArrayList<>();
+    public static List<Queries> storeQueries = new ArrayList<>();
+    public static double []distanceArr;
 
-    public static double calculateDistance(){
-        double distance = 0.0;
-        return distance;
-    }
-    public static void printAnswer(){
-//public hey new comment
-    }
 
     public static void main(String[] args) {
 	// read in csv files first then create a query for local data.
@@ -27,8 +21,6 @@ public class Main {
         //6.Sort the i stores and output in order from closest to furthest.
             String line  = "";
         try {
-
-
 
             // Create an object of file reader
             // class with CSV file as a parameter.
@@ -62,9 +54,54 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        String line2  = "";
+        try {
+
+            // Create an object of file reader
+            // class with CSV file as a parameter.
+            boolean firstLine2 = true;
+            BufferedReader br2 = new BufferedReader(new FileReader("Queries.csv"));
+            while((line2 = br2.readLine()) != null) {
+                if (firstLine2 == true) {
+                    firstLine2 = false;
+                    continue;
+                }
+                String[] attributes2 = line2.split(",");
+                if (attributes2[1].indexOf('"') == 0) {
+                    int k = 1;
+                    do {
+                        k++;
+                        attributes2[1] += ("," + attributes2[k]);
+                    } while (attributes2[k].indexOf('\"') == -1);
+                    attributes2[1].replace("\"", "");
+                    attributes2[2] = attributes2[k + 1];
+                    attributes2[3] = attributes2[k + 2];
+
+                }
+                Queries theQueries = new Queries(Double.parseDouble(attributes2[0]), Double.parseDouble(attributes2[1]), Integer.parseInt(attributes2[2]));
+                storeQueries.add(theQueries);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        distanceArr = new double[storeData.size()];
         //how to print variables form object
         for(int i = 0; i < storeData.size(); i++) {
-            System.out.println(storeData.get(i).longitude+" "+i+"\n");
+            storeData.get(i).computeDistance(storeQueries.get(0).latQ,storeQueries.get(0).longQ);
+            distanceArr[i]=storeData.get(i).getDistance();
+            //System.out.println(storeData.get(i).distance+" "+i+"\n"); TEST PRINT
         }
+        for (int r = 0; r <= storeQueries.size(); r++) {
+            Store.sort(distanceArr, 0, distanceArr.length - 1);
+            System.out.println(distanceArr[r] + "\n");
+        }
+        //Queries are being stored properly and are ready for calculations.
+        /*for (int g = 0; g < storeQueries.size(); g++){
+            System.out.println(storeQueries.get(g).latQ+", "+storeQueries.get(g).longQ+"\n");
+        }
+
+         */
     }
 }
