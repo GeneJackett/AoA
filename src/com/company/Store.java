@@ -63,7 +63,7 @@ public class Store {
             Random rand= new Random();
             int pivot = rand.nextInt(high-low)+low;
 
-            double temp1=arr[pivot];
+            Store temp1= storeData.get(low);
             arr[pivot]=arr[high];
             arr[high]=temp1;
         }
@@ -74,7 +74,7 @@ public class Store {
         smaller (smaller than pivot) to left of
         pivot and all greater elements to right
         of pivot */
-        public static int partition(double arr[], int low, int high)
+        public static int partition(int low, int high)
         {
             // pivot is chosen randomly
             random(arr,low,high);
@@ -110,18 +110,17 @@ public class Store {
         arr[] --> Array to be sorted,
         low --> Starting index,
         high --> Ending index */
-        public static void sort(double arr[], int low, int high)
+        public static void sort(int low, int high)
         {
             if (low < high)
             {
             /* pi is partitioning index, arr[pi] is
             now at right place */
-                int pi = partition(arr, low, high);
-
+                int pi = partition(low, high);
                 // Recursively sort elements before
                 // partition and after partition
-                sort(arr, low, pi-1);
-                sort(arr, pi+1, high);
+                sort(low, pi-1);
+                sort(pi+1, high);
             }
         }
 
