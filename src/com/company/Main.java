@@ -1,6 +1,8 @@
 package com.company;
 import java.util.*;
 import java.io.*;
+import java.text.DecimalFormat;
+
 
 
 public class Main {
@@ -16,6 +18,8 @@ public class Main {
         //5.Now that we know the ith closest store, make one final pass through
         //the distance array to find all i stores that are at least this close.
         //6.Sort the i stores and output in order from closest to furthest.
+        DecimalFormat df = new DecimalFormat("###.##");
+        //System.out.println("Rounded Double value (DecimalFormat): "+df.format(val1));
         String line = "";
         try {
 
@@ -60,6 +64,7 @@ public class Main {
             boolean firstLine2 = true;
             BufferedReader br2 = new BufferedReader(new FileReader("Queries.csv"));
             while ((line2 = br2.readLine()) != null) {
+                System.out.println("");//TEST PRINT
                 if (firstLine2 == true) {
                     firstLine2 = false;
                     continue;
@@ -73,44 +78,23 @@ public class Main {
                     } while (attributes2[k].indexOf('\"') == -1);
                     attributes2[1].replace("\"", "");
                     attributes2[2] = attributes2[k + 1];
-                    attributes2[3] = attributes2[k + 2];
-
                 }
+                System.out.println("The "+attributes2[2]+" closest Whataburgers to ("+attributes2[0]+", "+attributes2[1]+"):");
+
                 for (int i = 0; i < storeData.size(); i++) {
                     storeData.get(i).computeDistance(Double.parseDouble(attributes2[0]), Double.parseDouble(attributes2[1]));
-                    //System.out.println(storeData.get(i).distance+" "+i+"\n"); //TEST PRINT
+                    //System.out.println(storeData.get(i).distance+" "+i+""); TEST
                 }
-                Store.sort();
+                Store.randSelect(0,storeData.size()-1,Integer.parseInt(attributes2[2]));
+                //Whataburger #596. 6803 N Loop 1604 W, San Antonio, Texas, 78249. - 0.44 miles.
+
+                for (int h= 0; h < Integer.parseInt(attributes2[2]); h++)
+                    System.out.println("Whataburger #" + storeData.get(h).id+". "+storeData.get(h).address+" "+storeData.get(h).state+" "+storeData.get(h).zipCode+". - "+df.format(storeData.get(h).distance)+ " miles." );
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-
-        //how to print variables form object
-        //has to be a better way to print.
-        /*
-
-
-            for (int i = 0; i < storeData.size(); i++) {
-                storeData.get(i).computeDistance(storeQueries.get(k).latQ, storeQueries.get(k).longQ);
-                //System.out.println(storeData.get(i).distance+" "+i+"\n"); TEST PRINT
-            }
-
-            Store.sort(storeData.get(i).distance, 0, storeData.size());
-            System.out.println("The "+storeQueries.get(k).numStores+" closest Whataburgers to ("+storeQueries.get(k).latQ+", "+storeQueries.get(k).latQ+"):");
-            for (int r=0; r < storeQueries.get(k).numStores; r++ ){
-                //unable to access storeData during iteration
-                System.out.println("Whataburger "+storeData.get(r).id+". "+distanceArr[r]);
-            }
-            System.out.println("");
-        }
-        //Queries are being stored properly and are ready for calculations.
-        /*for (int g = 0; g < storeQueries.size(); g++){
-            System.out.println(storeQueries.get(g).latQ+", "+storeQueries.get(g).longQ+"\n");
-        }
-
-        */
     }
 }

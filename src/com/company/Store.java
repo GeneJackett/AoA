@@ -13,11 +13,6 @@ public class Store {
     public double latitude;
     public double longitude;
     public double distance;
-    public List<Store> storeList = new ArrayList<>();
-
-    public List<Store> getStoreList() {
-        return storeList;
-    }
 
     public double getDistance() {
         return distance;
@@ -54,73 +49,49 @@ public class Store {
             distance = radiusOfEarthInMiles * c;
         }
 
-        // This Function helps in calculating
-        // random numbers between low(inclusive)
-        // and high(inclusive)
-        public static void random(double arr[],int low, int high)
-        {
 
-            Random rand= new Random();
-            int pivot = rand.nextInt(high-low)+low;
-
-            Store temp1= storeData.get(low);
-            arr[pivot]=arr[high];
-            arr[high]=temp1;
-        }
-
-        /* This function takes last element as pivot,
-        places the pivot element at its correct
-        position in sorted array, and places all
-        smaller (smaller than pivot) to left of
-        pivot and all greater elements to right
-        of pivot */
-        public static int partition(int low, int high)
-        {
+        public static int randPartition(int low, int high) {
             // pivot is chosen randomly
-            random(arr,low,high);
-            double pivot = arr[high];
+            Random rng = new Random();
+            int pivotIndex = rng.nextInt(high-low+1)+ low;
+            Store temp = Main.storeData.get(low);
+            Main.storeData.set(low, Main.storeData.get(pivotIndex));
+            Main.storeData.set(pivotIndex, temp);
 
-
-            int i = (low-1); // index of smaller element
-            for (int j = low; j < high; j++)
+            double pivotDistance = Main.storeData.get(low).distance;
+            int i = low;
+            for (int j = low + 1; j <= high; j++)
             {
-                // If current element is smaller than or
-                // equal to pivot
-                if (arr[j] < pivot)
+                if (Main.storeData.get(j).distance <= pivotDistance)
                 {
                     i++;
 
                     // swap arr[i] and arr[j]
-                    double temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
+                    temp = Main.storeData.get(j);
+                    Main.storeData.set(j, Main.storeData.get(i)) ;
+                    Main.storeData.set(i, temp);
                 }
             }
-
-            // swap arr[i+1] and arr[high] (or pivot)
-            double temp = arr[i+1];
-            arr[i+1] = arr[high];
-            arr[high] = temp;
-
-            return i+1;
+            temp = Main.storeData.get(low);
+            Main.storeData.set(low, Main.storeData.get(i));
+            Main.storeData.set(i, temp);
+            return i;
         }
 
+        public static Store randSelect(int low, int high, int i) {
+            if (low == high) {
+                return Main.storeData.get(low);
 
-        /* The main function that implements QuickSort()
-        arr[] --> Array to be sorted,
-        low --> Starting index,
-        high --> Ending index */
-        public static void sort(int low, int high)
-        {
-            if (low < high)
-            {
-            /* pi is partitioning index, arr[pi] is
-            now at right place */
-                int pi = partition(low, high);
-                // Recursively sort elements before
-                // partition and after partition
-                sort(low, pi-1);
-                sort(pi+1, high);
+            }
+                int r = randPartition(low, high);//index of entire array
+                int k = r - (low - 1);//rank with respect to our subproblem
+            if(i == k) {
+                return Main.storeData.get(r);
+            }
+            if(i < k) {
+                return randSelect(low, r-1, i);
+            }else{
+               return randSelect(r+1, high,i-k);// continues to throw off order
             }
         }
 
